@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Code Editor & VCF Manager Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="toolbar">
+    <button id="nav-editor" class="active-nav" onclick="showEditor()">Editor</button>
+    <button id="nav-vcf" class="btn-vcf" onclick="showVCF()">VCF Manager</button>
+    <button onclick="saveProject()">Save Project</button>
+    <button onclick="showSavedProjects()">Load Files</button>
+    <button onclick="triggerImport()">Import</button>
+    <button class="btn-test" onclick="runTest()">Test</button>
+    <button onclick="smartDownload()">Download</button>
+    <button class="btn-clear" onclick="clearTab()">Clear</button>
+    <input type="file" id="importFile" accept=".vcf,.html,.htm,.css,.js,.py,.php,.xml,.svg" style="display:none">
+</div>
+
+<div id="editor-page">
+    <div class="tabs">
+        <button id="btn-tab-html" class="tab-btn active" onclick="openTab(event, 'html')">HTML</button>
+        <button id="btn-tab-css" class="tab-btn" onclick="openTab(event, 'css')">CSS</button>
+        <button id="btn-tab-js" class="tab-btn" onclick="openTab(event, 'js')">JS</button>
+        <button id="btn-tab-svg" class="tab-btn" onclick="openTab(event, 'svg')">SVG</button>
+        <button id="btn-tab-php" class="tab-btn" onclick="openTab(event, 'php')">PHP</button>
+        <button id="btn-tab-python" class="tab-btn" onclick="openTab(event, 'python')">Python</button>
+        <button id="btn-tab-xml" class="tab-btn" onclick="openTab(event, 'xml')">XML</button>
+        <button id="btn-tab-single" class="tab-btn" onclick="openTab(event, 'single')">Single File</button>
+    </div>
+    <div class="editor-container">
+        <textarea id="html-editor" class="active" spellcheck="false" placeholder="HTML..."></textarea>
+        <textarea id="css-editor" spellcheck="false" placeholder="CSS..."></textarea>
+        <textarea id="js-editor" spellcheck="false" placeholder="JS..."></textarea>
+        <textarea id="svg-editor" spellcheck="false" placeholder="SVG..."></textarea>
+        <textarea id="php-editor" spellcheck="false" placeholder="PHP..."></textarea>
+        <textarea id="python-editor" spellcheck="false" placeholder="Python..."></textarea>
+        <textarea id="xml-editor" spellcheck="false" placeholder="XML..."></textarea>
+        <textarea id="single-editor" spellcheck="false" readonly></textarea>
+    </div>
+</div>
+
+<div id="vcf-page">
+    <div class="vcf-header">
+        <div style="display: flex; gap: 5px; margin-bottom: 8px;">
+            <input type="text" id="newName" class="vcf-input" placeholder="Name" style="margin-bottom:0;">
+            <input type="tel" id="newNum" class="vcf-input" placeholder="Number" style="margin-bottom:0;">
+            <button onclick="addNewContact()" class="big-btn" style="width: auto; margin-bottom:0; padding: 0 15px; background: #0078d3; color: white;">Add</button>
+        </div>
+        <input type="text" id="vcfSearch" class="search-bar" placeholder="🔍 Search contacts..." onkeyup="filterContacts()">
+        
+        <div style="display: flex; gap: 4px; margin-top: 5px;">
+            <button id="btn-toggle-saved" onclick="toggleSavedContacts()" class="big-btn" style="background:#0078d3; color:white; font-size: 11px; flex: 1.2;">📁 Show Saved</button>
+            <button class="big-btn" onclick="saveSelectedToLocal()" style="background:#107c19; color:white; font-size: 11px; flex: 1;">💾 Save to Local</button>
+            <button class="big-btn" onclick="deleteLocal()" style="background:#d83b01; color:white; font-size: 11px; flex: 0.6;">Delete</button>
+            <button class="big-btn" onclick="exportVCF()" style="background:#f4b400; font-size: 11px; flex: 0.6;">Export</button>
+        </div>
+
+        <div class="select-all-box">
+            <input type="checkbox" id="masterSelect" onclick="toggleAllShown(this)">
+            <label for="masterSelect"><b>Select All Contacts Below</b></label>
+        </div>
+    </div>
+
+    <div class="vcf-scroll-area">
+        <div class="vcf-card" id="import-section" style="display:none;">
+            <div class="vcf-title">Imported List <button onclick="closeImport()" style="background:red; color:white; border:none; padding:2px 8px; border-radius:4px; font-size:10px;">X Close</button></div>
+            <div id="import-list"></div>
+        </div>
+        <div id="saved-contacts-container" style="display:none;">
+            <div class="vcf-title" style="color:#569cd6;">Saved in Local DB</div>
+            <div id="local-list"></div>
+        </div>
+    </div>
+</div>
+
+<div id="preview-container">
+    <iframe id="output-frame"></iframe>
+    <div class="back-btn" onclick="closePreview()">← BACK TO EDITOR</div>
+</div>
+
+<div id="overlay" onclick="closeModal()"></div>
+<div id="modal">
+    <h3>Saved Code Projects</h3><br>
+    <div id="project-list" style="max-height:200px; overflow-y:auto;"></div><br>
+    <button class="big-btn" onclick="closeModal()">Close</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
