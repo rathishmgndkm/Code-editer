@@ -225,7 +225,7 @@ function smartDownload() {
         content = document.getElementById('single-editor').value;
     }
 
-    if(!content && activeTab !== 'single') return alert("എഡിറ്റർ കാലിയാണ്!");
+    if(!content && activeTab !== 'single') return alert("Empty tab");
 
     const blob = new Blob([content], { type: mimeType });
     const a = document.createElement('a'); 
